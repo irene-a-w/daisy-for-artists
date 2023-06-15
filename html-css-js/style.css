@@ -1,0 +1,52 @@
+.left{
+    background-color: antiquewhite;
+    float: left;
+    height: 100vh;
+    width: 30%;
+    position: fixed;
+}
+.right{
+    background-color: peachpuff;
+    float: right;
+    height: 100vh;
+    width: 70%;
+    overflow: auto;
+}
+
+html, body {
+    margin:0;
+    padding:0;
+}
+
+.profile {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    height:100%;
+    width:100%;
+    position:absolute;
+    outline-style: dotted;
+    outline-color: red;
+    height: 500px;
+    width: 500px;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    outline-style: dotted;
+    outline-color: red;
+  }
+
+.name{
+    text-align: center;
+    outline-style: dotted;
+    outline-color: red;
+}

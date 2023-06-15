@@ -1,0 +1,51 @@
+
+
+body {
+    background-color: pink;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    outline-style: dotted;
+    outline-color: white;
+    border-radius: 25px;
+    align-items: center;
+    position: absolute;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 3vw 7vw;
+}
+
+.input {
+    display: block;
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    width: 90%;
+  }
+
+.submit {
+    border: none;
+    background-color: white;
+    margin-top: 0.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #7439db;
+    box-sizing: border-box;
+    padding: 20px;
+    float: right;
+  }
+
+  .input-description {
+    float: left;
+    padding: 0.5rem 0;
+  }
+
+  
