@@ -35,18 +35,29 @@ const createRequest = async(req, res) => {
         }
 };
 
+const getAllRequests = async (req, res) => {
+    const allRequests = await Request.find({ requester: req.user.id });
+    res.status(200).json(allRequests)
+};
+
 const getAllRequestsByStatus = async (req, res) => {
-    const requests = await Request.find({ status: req.body.status, requestee: req.user.id })
+    const requests = await Request.find({ status: req.body.status, requester: req.user.id })
     res.status(200).json(requests)
 };
-const getRequestDetail = async (req, res) => {};
 
 const updateRequestStatus = async (req, res) => {
-    const updateRequestStatus = await Request.findByIdAndUpdate(req.params.id, {
+    // (temp) make sure only requested can edit request status
+    const request = await Request.findById(req.params.id)
+    if (request.user.toString() == req.user.id) {
+        const updateRequestStatus = await Request.findByIdAndUpdate(req.params.id, {
         status: req.body.status
-      });
-    res.status(200).json(updateRequestStatus);
-    res.send(updateRequestStatus);
+        });
+        res.status(200).json(updateRequestStatus);
+        res.send(updateRequestStatus);
+    } else {
+        res.status(401);
+        throw new Error('User not authorized');
+    }
 };
 
 const deleteRequest = async (req, res) => {
@@ -57,7 +68,7 @@ const deleteRequest = async (req, res) => {
 
 module.exports = {
     getAllRequestsByStatus,
-    getRequestDetail,
+    getAllRequests,
     createRequest,
     updateRequestStatus,
     deleteRequest
