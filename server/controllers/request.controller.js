@@ -48,12 +48,13 @@ const getAllRequestsByStatus = async (req, res) => {
 const updateRequestStatus = async (req, res) => {
     // (temp) make sure only requested can edit request status
     const request = await Request.findById(req.params.id)
-    if (request.user.toString() == req.user.id) {
+    if (request.requester.toString() == req.user.id) {
         const updateRequestStatus = await Request.findByIdAndUpdate(req.params.id, {
         status: req.body.status
         });
         res.status(200).json(updateRequestStatus);
-        res.send(updateRequestStatus);
+        
+        // res.save();
     } else {
         res.status(401);
         throw new Error('User not authorized');
@@ -62,8 +63,13 @@ const updateRequestStatus = async (req, res) => {
 
 const deleteRequest = async (req, res) => {
     const request = await Request.findById(req.params.id)
-    await request.deleteOne()
-    res.status(200).json({ message: "deleted successfully!!"})
+    if (request.requester.toString() == req.user.id) {
+        await request.deleteOne()
+        res.status(200).json({ message: "deleted successfully!!"})
+    } else {
+        res.status(401);
+        throw new Error('User not authorized');
+    }
 };
 
 module.exports = {
