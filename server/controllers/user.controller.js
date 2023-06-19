@@ -9,10 +9,13 @@ const createUser = asyncHandler(async (req, res) => {
     const newEmail = req.body.email;
     const newPassword = req.body.password;
 
-    const usernameInUse = await User.findOne({ username: newUsername }).exec();
     const emailInUse = await User.findOne({ email: newEmail }).exec();
-    if (emailInUse || usernameInUse) {
-        return res.status(200).json({ message: 'User exists' });
+    const usernameInUse = await User.findOne({ username: newUsername }).exec();
+    if (emailInUse) {
+        return res.status(403).json({ message: 'email exists' });
+    }
+    if (usernameInUse) {
+        return res.status(403).json({ message: 'username exists' });
     }
 
     // hash password

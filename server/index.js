@@ -2,23 +2,18 @@ const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require("mongoose");
 const cors = require("cors");
-// var bodyParser = require('body-parser');
 
 const userRouter = require('./routes/user.routes.js') ;
 const requestRouter = require('./routes/request.routes.js') ;
-
 
 dotenv.config();
 
 const app = express();
 app.use(express.urlencoded({extended:true}));
-// app.use(bodyParser.json()); 
-
-app.use("/api/users", userRouter);
-app.use("/api/requests", requestRouter);
-
 app.use(express.json());
 app.use(cors());
+app.use("/api/users", userRouter);
+app.use("/api/requests", requestRouter);
 
 const connectDB = (url) => {
     mongoose.set("strictQuery", true);

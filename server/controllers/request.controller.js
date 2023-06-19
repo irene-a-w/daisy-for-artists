@@ -53,8 +53,7 @@ const updateRequestStatus = async (req, res) => {
         status: req.body.status
         });
         res.status(200).json(updateRequestStatus);
-        
-        // res.save();
+
     } else {
         res.status(401);
         throw new Error('User not authorized');
