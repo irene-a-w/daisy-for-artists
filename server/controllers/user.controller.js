@@ -34,7 +34,8 @@ const createUser = asyncHandler(async (req, res) => {
         await newUser.save();
         // create a profile for new user
         const userProfile = new Profile({
-            user: newUser._id
+            user: newUser._id,
+            username: newUser.username
         });        
         await userProfile.save();
         res.status(200).json({
@@ -61,7 +62,6 @@ const loginUser = asyncHandler(async (req, res) => {
         res.status(200).json({
             id: findUser.id,
             username: findUser.username,
-            password: findUser.password,
             token: token
         });
         console.log(token)
@@ -109,9 +109,9 @@ const changePassword = asyncHandler(async (req, res) => {
 });
 
 const getUserProfile = asyncHandler(async (req, res) => {
-    const userProfile = await Profile.find({user: req.id});
+    const userProfile = await Profile.find({user: req.params.id});
     res.status(200).json({
-        bio: userProfile.bio
+        profile: userProfile[0]
     })
 });
 

@@ -19,10 +19,14 @@ const requestSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    requesterUsername: {
+        type: String,
+        required: true
+    },
     requestee: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User',
-        // required: true
+        required: true
     }},
     {
         timestamps: true

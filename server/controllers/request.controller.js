@@ -10,14 +10,16 @@ const User = require('../models/user.js');
 const createRequest = async(req, res) => {
     const newTitle = req.body.title;
     const newDescrip = req.body.description;
-    const newRequester = req.user.id;
-    // const newRequestee = req.user.requestee;
+    const newRequester = req.body.requester;
+    const newRequesterUsername = req.body.requesterUsername;
+    const newRequestee = req.body.requestee;
 
     const newRequest = new Request({
     title: newTitle,
     description: newDescrip,
     requester: newRequester,
-    // requestee: newRequestee
+    requesterUsername: newRequesterUsername,
+    requestee: newRequestee
     });
 
     try {
@@ -25,9 +27,9 @@ const createRequest = async(req, res) => {
         res.status(200).json({
             title: newTitle,
             description: newDescrip,
-            status: newRequest.status,
-            requester: newRequester,  
-            // requestee: newRequestee
+            requester: newRequester, 
+            requesterUsername: newRequesterUsername, 
+            requestee: newRequestee
         });
     }
     catch(error) {
@@ -37,12 +39,12 @@ const createRequest = async(req, res) => {
 
 // TODO need to change requester to requestee
 const getAllRequests = async (req, res) => {
-    const allRequests = await Request.find({ requester: req.user.id });
+    const allRequests = await Request.find({ requestee: req.query.id });
     res.status(200).json(allRequests)
 };
 
 const getAllRequestsByStatus = async (req, res) => {
-    const requests = await Request.find({ status: req.body.status, requester: req.user.id })
+    const requests = await Request.find({ status: req.query.status, requestee: req.query.id })
     res.status(200).json(requests)
 };
 
