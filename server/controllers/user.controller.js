@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user.js') ;
+const Profile = require('../models/profile.js');
 
 
 const createUser = asyncHandler(async (req, res) => {
@@ -31,6 +32,11 @@ const createUser = asyncHandler(async (req, res) => {
 
     try {
         await newUser.save();
+        // create a profile for new user
+        const userProfile = new Profile({
+            user: newUser._id
+        });        
+        await userProfile.save();
         res.status(200).json({
             username: newUsername,
             email: newEmail,
@@ -51,11 +57,16 @@ const loginUser = asyncHandler(async (req, res) => {
     const findUser = await User.findOne({ username: existingUsername }).exec();
 
     if (findUser && await bcrypt.compare(existingPassword, findUser.password)) {
-        res.json({
-            username: existingUsername,
-            password: existingPassword,
-            token: generateToken(findUser._id)
-        })
+        const token = generateToken(findUser._id)
+        res.status(200).json({
+            id: findUser.id,
+            username: findUser.username,
+            password: findUser.password,
+            token: token
+        });
+        console.log(token)
+        // res.header('Authorization', 'Bearer '+ token);
+        // return res.redirect('/api/users/profile/' + findUser._id);
     } else {
         res.status(400);
         throw new Error('Invalid credentials');
@@ -80,9 +91,9 @@ const changeUsername = asyncHandler(async (req, res) => {
     const findUser = await User.findOne({ username: choosenUsername }).exec();
     
     if (findUser) {
-        return res.status(200).json({ message: 'Choose a diff username' });
+        return res.status(403).json({ message: 'Choose a diff username' });
     }
-    const updateUsername = await User.findByIdAndUpdate(req.params.id, {
+    const updateUsername = await User.findByIdAndUpdate(req.query.id, {
         username: req.body.username
       });
     res.status(200).json(updateUsername);
@@ -90,12 +101,39 @@ const changeUsername = asyncHandler(async (req, res) => {
 });
 
 const changePassword = asyncHandler(async (req, res) => {
-    const updateUserPassword = await User.findByIdAndUpdate(req.params.id, {
+    const updateUserPassword = await User.findByIdAndUpdate(req.query.id, {
         password: req.body.password
       });
     res.status(200).json(updateUserPassword);
     res.send(updateUserPassword);
 });
+
+const getUserProfile = asyncHandler(async (req, res) => {
+    const userProfile = await Profile.find({user: req.id});
+    res.status(200).json({
+        bio: userProfile.bio
+    })
+});
+
+const changeUserProfile = asyncHandler(async (req, res) => {
+    const updatedProfile = await User.findByIdAndUpdate(req.query.id, {
+        bio: req.body.bio
+    });
+    res.status(200).json(updatedProfile);
+    res.send(updatedProfile);
+})
+
+// TODO this may need to be fixed???
+const findMatchingUsers = asyncHandler(async (req, res) => {
+    // use regular expressions to find all matching substrings
+    const matchingUsers = await User.find({ username: { $regex: req.query.username, $options: 'i' }});
+    if (matchingUsers) {
+        res.status(200).json(matchingUsers);
+    } else {
+        res.status(404).json({message: "no matching users"});
+    }
+})
+
 
 // generate JWT
 const generateToken = (id) => {
@@ -109,5 +147,8 @@ module.exports = {
     loginUser,
     getUserInfoById,
     changeUsername,
-    changePassword
+    changePassword,
+    getUserProfile,
+    changeUserProfile,
+    findMatchingUsers
 }

@@ -35,6 +35,7 @@ const createRequest = async(req, res) => {
         }
 };
 
+// TODO need to change requester to requestee
 const getAllRequests = async (req, res) => {
     const allRequests = await Request.find({ requester: req.user.id });
     res.status(200).json(allRequests)

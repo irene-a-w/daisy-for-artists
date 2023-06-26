@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import {BrowserRouter, Link} from 'react-router-dom';
 
 import React from 'react'
 import axios from "axios";
@@ -7,6 +8,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     setErrorMsg('');
@@ -30,6 +32,10 @@ const Login = () => {
     }
   }
 
+  // if (redirect) {
+  //   return <Redirect to='/register'></Redirect>
+  // }
+
   return (
     <form className="login">
       <h1>login</h1>
@@ -43,7 +49,11 @@ const Login = () => {
              value={password}
              onChange={(event) => {setPassword(event.target.value)}}
              required/>
-      <button onClick={handleSubmit}>Login</button> 
+      <button onClick={handleSubmit}>login</button> 
+      <BrowserRouter>
+      <Link to='/register'>register</Link>
+      </BrowserRouter>
+      
       {errorMsg && <p>{ errorMsg }</p>}   
       <p>register</p>   
     </form>
