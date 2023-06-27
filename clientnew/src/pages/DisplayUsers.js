@@ -1,16 +1,22 @@
 import React from 'react'
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+// TODO replace headers with link to respective users profile
 const DisplayUsers = () => {
     console.log("in display users");
-    const {state} = useLocation();
+    const {state } = useLocation();
     const { foundUsers } = state;
+    let navigate = useNavigate();
+
     console.log("display ", foundUsers);
+
     return (
         <>
         {foundUsers.map((foundUsers) => (
-            <h1>{foundUsers.username}</h1>
+            <div onClick={() =>navigate('/profile', {state: {currentUser: foundUsers._id}})}>
+               <h1>{foundUsers.username}</h1> 
+            </div>
         ))}
         </>
     )

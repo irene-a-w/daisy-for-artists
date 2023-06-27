@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import React from 'react';
 import axios from "axios";
 
 export const Register = () => {
+  let navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-    const [authenticated, setAuthenticated] = useState(false);
-    const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
         setErrorMsg('');
@@ -23,10 +23,11 @@ export const Register = () => {
       try {
         const userResponse = await axios.post(url, createUser);
         console.log(userResponse);
-        localStorage.setItem("current user", userResponse.data);
-        localStorage.setItem("token", userResponse.data.token);
+        sessionStorage.setItem("userID", userResponse.data.id);
+        sessionStorage.setItem("username", userResponse.data.username);
+        sessionStorage.setItem("token", userResponse.data.token);
         if (userResponse.status === 200) {
-          setRedirect(true);
+          navigate('/profile', {state: {currentUserID: userResponse.data.id}});
         }
       } catch (error) {
         console.log(error)
@@ -39,24 +40,6 @@ export const Register = () => {
       } else {
           setErrorMsg('error: unable to create account.');
       }}
-    }
-
-    const redirectProfile = async (e) => {
-      const token = localStorage.getItem("token")
-      const headers = {
-        'Authorization': 'Bearer ' + token
-      }
-      const userID = localStorage.getItem("current user")
-      const url = "http://localhost:8080/api/users/profile/" + userID["id"];
-      const userProfile = await axios.get(url, {headers: headers});
-      if (userProfile.status === 200) {
-        console.log("auth sucess");
-        setAuthenticated(true);
-      }
-    }
-  
-    if (redirect) {
-      redirectProfile();
     }
 
   return (
@@ -80,7 +63,6 @@ export const Register = () => {
       <button onClick={handleSubmit}>register</button> 
       <Link to='/'>login</Link> 
       {errorMsg && <p>{ errorMsg }</p>}    
-      {authenticated ? <Navigate to="/profile"></Navigate>: null}  
     </form>
   )
 }

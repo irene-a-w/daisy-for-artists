@@ -1,21 +1,32 @@
 import React from 'react';
 import axios from 'axios';
 
-import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import DisplayRequests from '../components/DisplayRequests';
 
 // TODO need to implement getting a specific users profile
 
 const Profile = () => {
+  const { state } = useLocation();
+  const { currentUserID } = state;
+  // const currentUserID = sessionStorage.getItem("userID");
+
+  console.log("profile ID", currentUserID);
+
   const [searchString, setSearchString] = useState('');
   const [searchButton, setSearchButton] = useState(false);  
+  const [username, setUsername] = useState('');
+  const [bio, setBio] = useState('');
 
   let navigate = useNavigate(); 
   const logout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   }
 
+  // search for a user -> this should probably be moved to the nav bar component
   const handleSearch = async () => {
     const url = "http://localhost:8080/api/users/find"
     console.log("search str ", searchString);
@@ -38,15 +49,38 @@ const Profile = () => {
   // send the found users over to the linked page
   if (searchButton) {
     handleSearch().then(res => 
-      {navigate('/foundusers', {state: {foundUsers: res}})}
+      {navigate('/foundusers', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID")))}})}
     )
   }
 
+  // retrieve user profile
+  const retrieveUserInfo = async () => {
+    console.log("user info ", currentUserID);
+    const url = "http://localhost:8080/api/users/profile/" + currentUserID;
+    console.log("url ", url);
+    const userProfile = await axios.get(url);
+    if (userProfile.status === 200) {
+      setUsername(userProfile.data.profile.bio); // todo needs to be changed later
+      setBio(userProfile.data.profile.bio);
+      console.log(userProfile);
+    }
+  } 
+
+  // useEffect(() => {
+  //   retrieveUserInfo();
+  // })
+
   return (
     <div>
+      {currentUserID === sessionStorage.getItem("userID") && 
+      <div>
+      <h1>your profile</h1>
+        <button onClick={logout}>logout</button>
+      </div>      
+      }
     <section className='profile'>
-      <h1>username</h1>
-      <p>bio</p>
+      <h1>{username}</h1>
+      <p>{bio}</p>
     </section>
     <section className='requests'>
       <h1>requests</h1>
@@ -56,9 +90,15 @@ const Profile = () => {
              value={searchString}
              onChange={(event) => {setSearchString(event.target.value)}}></input>
     <button onClick={searchClicked}>search</button>
+    {currentUserID !== sessionStorage.getItem("userID") && 
     <div>
-      <button onClick={logout}>logout</button>
+      <button onClick={() => {navigate('/sendrequest', {state: {requestee: currentUserID}})}}>request</button>
     </div>
+    }
+    <h1>sent requests</h1>
+    {currentUserID === sessionStorage.getItem("userID") && <DisplayRequests userID={sessionStorage.getItem("userID")} status={null}></DisplayRequests>}
+    <h1>received requests</h1>
+    <DisplayRequests userID={currentUserID} status={"Requested"}></DisplayRequests>
     </div>
   )
 }

@@ -1,35 +1,37 @@
 import { useEffect, useState } from "react";
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import React from 'react'
 import axios from "axios";
 
 const Login = () => {
+  let navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const [authenticated, setAuthenticated] = useState(false);
-  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     setErrorMsg('');
 }, [username, password])
 
   const handleLogin = async (e) => { 
+    console.log("entering here");
     const url = "http://localhost:8080/api/users/login"
     const loginUser = { username: username, password: password};    
     e.preventDefault();
     try {
       const userResponse = await axios.post(url, loginUser);
-      localStorage.setItem("userID", userResponse.data.id);
-      localStorage.setItem("token", userResponse.data.token);
+      console.log("is there a response", userResponse);
+
       if (userResponse.status === 200) {
-        setRedirect(true);
-        console.log(redirect);
+        console.log("userResponse")
+        sessionStorage.setItem("userID", userResponse.data.id);
+        sessionStorage.setItem("username", userResponse.data.username);
+        sessionStorage.setItem("token", userResponse.data.token);
+        navigate('/profile', {state: {currentUserID: userResponse.data.id}})
       }
     } catch (error) {
-      setRedirect(false);
       if (!error?.response) {
         setErrorMsg('No Server Response');
     } else if (error.response?.status === 400) {
@@ -39,26 +41,22 @@ const Login = () => {
     }}
   }
 
-  const redirectProfile = async () => {
-    const token = localStorage.getItem("token")
-    const headers = {
-      'Authorization': 'Bearer ' + token
-    }
-    const userID = localStorage.getItem("userID")
-    console.log("userId " + userID)
-    const url = "http://localhost:8080/api/users/profile/" + userID;
-    console.log("url ", url);
-    const userProfile = await axios.get(url, {headers: headers});
-    if (userProfile.status === 200) {
-      console.log("auth sucess");
-      setAuthenticated(true);
-    }
-  }
+  // const redirectProfile = async () => {
+  //   const token = sessionStorage.getItem("token")
+  //   const headers = {
+  //     'Authorization': 'Bearer ' + token
+  //   }
+  //   const userID = sessionStorage.getItem("userID")
+  //   console.log("userId " + userID)
+  //   const url = "http://localhost:8080/api/users/profile/" + userID;
+  //   console.log("url ", url);
+  //   const userProfile = await axios.get(url, {headers: headers});
+  //   if (userProfile.status === 200) {
+  //     console.log("auth sucess");
+  //     setAuthenticated(true);
+  //   }
+  // }
 
-  if (redirect) {
-    redirectProfile();
-    console.log("auth ", authenticated)
-  }
 
   return (
     <form className="login">
@@ -76,7 +74,6 @@ const Login = () => {
       <button onClick={handleLogin}>login</button> 
       <Link to='/register'>register</Link>      
       {errorMsg && <p>{ errorMsg }</p>}   
-      {authenticated ? <Navigate to="/profile"></Navigate>: null}
     </form>
   )
 }

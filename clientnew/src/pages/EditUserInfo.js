@@ -10,7 +10,7 @@ const EditUserInfo = () => {
   const [newBio, setBio] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
-  const token = localStorage.getItem("token")
+  const token = sessionStorage.getItem("token")
   const headers = {
     'Authorization': 'Bearer ' + token
   }
@@ -22,7 +22,7 @@ const EditUserInfo = () => {
   // send queries function -> display success message
   // each button will be defined to do a different query
   const handleUsernameChange = async (e) => { 
-    const userID = localStorage.getItem("current user");
+    const userID = sessionStorage.getItem("current user");
     const url = "http://localhost:8080/api/users/profile/edit/username/" + userID["id"];
     const newUsername = {username: newUsername}
     try {
@@ -41,7 +41,7 @@ const EditUserInfo = () => {
   }
 
   const handlePasswordChange = async (e) => { 
-    const userID = localStorage.getItem("current user");
+    const userID = sessionStorage.getItem("current user");
     const url = "http://localhost:8080/api/users/profile/edit/password/" + userID["id"];
     const newPassword = {password: newPassword}
     try {
@@ -58,7 +58,7 @@ const EditUserInfo = () => {
   }
 
   const handleBioChange = async (e) => { 
-    const userID = localStorage.getItem("current user");
+    const userID = sessionStorage.getItem("current user");
     const url = "http://localhost:8080/api/users/profile/edit/bio/" + userID["id"];
     const newBio = {bio: newBio}
     // changing bio is a little different .. i think should display the old bio values

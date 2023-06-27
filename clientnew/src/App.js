@@ -4,12 +4,13 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import DisplayUsers from "./pages/DisplayUsers";
+import SubmitRequest from "./components/SubmitRequest";
 import Protected from "./Protected";
 import './App.css';
 
 function App() {
   // check that token is stored, probably need to do some error handling to make sure its cleared/added correctly
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   console.log("app token" + token);
   return (
     <BrowserRouter>
@@ -19,6 +20,7 @@ function App() {
         <Route element={<Protected></Protected>}>
           <Route path='profile' element={<Profile />}></Route>
           <Route path='foundusers' element={<DisplayUsers />}></Route>
+          <Route path='sendrequest' element={<SubmitRequest />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
