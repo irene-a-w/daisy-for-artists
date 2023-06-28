@@ -11,7 +11,10 @@ import DisplayRequests from '../components/DisplayRequests';
 const Profile = () => {
   const { state } = useLocation();
   const { currentUserID } = state;
-  // const currentUserID = sessionStorage.getItem("userID");
+  if (!currentUserID) {
+     currentUserID = sessionStorage.getItem("userID");
+  }
+ 
 
   console.log("profile ID", currentUserID);
 
@@ -49,7 +52,7 @@ const Profile = () => {
   // send the found users over to the linked page
   if (searchButton) {
     handleSearch().then(res => 
-      {navigate('/foundusers', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID")))}})}
+      {navigate('/users', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID")))}})}
     )
   }
 
@@ -59,28 +62,30 @@ const Profile = () => {
     const url = "http://localhost:8080/api/users/profile/" + currentUserID;
     console.log("url ", url);
     const userProfile = await axios.get(url);
+    console.log("userProfile response", userProfile);
     if (userProfile.status === 200) {
-      setUsername(userProfile.data.profile.bio); // todo needs to be changed later
+      setUsername(userProfile.data.profile.username); // todo needs to be changed later
       setBio(userProfile.data.profile.bio);
       console.log(userProfile);
     }
   } 
 
-  // useEffect(() => {
-  //   retrieveUserInfo();
-  // })
+  useEffect(() => {
+    retrieveUserInfo();
+  })
 
   return (
     <div>
       {currentUserID === sessionStorage.getItem("userID") && 
       <div>
-      <h1>your profile</h1>
+        <h1>your profile</h1>
+        <button onClick={() => {navigate('/profile/edit')}}>edit profile</button>
         <button onClick={logout}>logout</button>
       </div>      
       }
     <section className='profile'>
-      <h1>{username}</h1>
-      <p>{bio}</p>
+    <h1>{username}</h1>
+    <p>{bio}</p>
     </section>
     <section className='requests'>
       <h1>requests</h1>
@@ -92,7 +97,7 @@ const Profile = () => {
     <button onClick={searchClicked}>search</button>
     {currentUserID !== sessionStorage.getItem("userID") && 
     <div>
-      <button onClick={() => {navigate('/sendrequest', {state: {requestee: currentUserID}})}}>request</button>
+      <button onClick={() => {navigate('/request/submit', {state: {requestee: currentUserID}})}}>request</button>
     </div>
     }
     <h1>sent requests</h1>

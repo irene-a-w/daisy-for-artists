@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import DisplayUsers from "./pages/DisplayUsers";
+import EditProfile from "./components/EditProfile";
+import DisplayUsers from "./components/DisplayUsers";
 import SubmitRequest from "./components/SubmitRequest";
 import Protected from "./Protected";
 import './App.css';
@@ -19,8 +20,9 @@ function App() {
         <Route path='register' element={<Register />}></Route>
         <Route element={<Protected></Protected>}>
           <Route path='profile' element={<Profile />}></Route>
-          <Route path='foundusers' element={<DisplayUsers />}></Route>
-          <Route path='sendrequest' element={<SubmitRequest />}></Route>
+          <Route path='users' element={<DisplayUsers />}></Route>
+          <Route path='request/submit' element={<SubmitRequest />}></Route>
+          <Route path='profile/edit' element={<EditProfile />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

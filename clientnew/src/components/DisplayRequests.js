@@ -46,21 +46,21 @@ const DisplayRequests = (props) => {
             <div>
                <h1>{request.title}</h1> 
                {props.status && <p>{request.requesterUsername}</p>}
-               <p>{requests.status}</p>
-                {props.status === "Requested" && 
+               <p>{request.status}</p>
+                {props.status === "Requested" && request.requestee === sessionStorage.getItem("userID") &&
                 <div>
                 <button onClick={() => requestStatus(request._id, request.requestee, "accepted")}>accept</button>
                 <button onClick={() => requestStatus(request._id, request.requestee, "declined")}>decline</button>
                 </div>
                 }
 
-                {props.status === "accepted" && 
+                {props.status === "accepted" && request.requestee === sessionStorage.getItem("userID") &&
                 <div>
                 <button onClick={() => requestStatus(request._id, request.requestee, "started")}>started</button>
                 </div>
                 }
 
-                {props.status === "started" && 
+                {props.status === "started" && request.requestee === sessionStorage.getItem("userID") &&
                 <div>
                 <button onClick={() => requestStatus(request._id, request.requestee, "completed")}>completed</button>
                 </div>
