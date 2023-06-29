@@ -5,6 +5,7 @@ import React from 'react'
 import axios from "axios";
 
 const Login = () => {
+  sessionStorage.clear();
   let navigate = useNavigate();
 
   const [username, setUsername] = useState('');

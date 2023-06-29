@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.navigation {
+    font-family: 'DM Serif Text', serif;
+    background-color: #f4acb7; 
+    color: #9d8189;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.navigation h1{
+    font-size: xx-large;
+    margin: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+}
+
+.right {
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    font-size: larger;
+}
+
+.right input{
+    background-color: #ffe5d9;
+    font-family: inherit;
+    border: none;
+    border-radius: 7px;
+    padding: 0.75rem;
+    margin: 5px;
+    width: 300px;
+}
+
+.right input:focus, textarea:focus {
+    outline: none !important;
+    border: 2px solid #9d8189;
+  }
+
+.right button{
+    background-color: #ffcad4;
+    font-family: inherit;
+    color: #9d8189;
+    border: none;
+    border-radius: 7px;
+    margin-right: 15px;
+}

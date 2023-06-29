@@ -5,6 +5,7 @@ import React from 'react';
 import axios from "axios";
 
 export const Register = () => {
+  sessionStorage.clear();
   let navigate = useNavigate();
 
     const [email, setEmail] = useState('');
