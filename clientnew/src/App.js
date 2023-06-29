@@ -15,19 +15,19 @@ function App() {
   const token = sessionStorage.getItem("token");
   console.log("app token" + token);
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path='/' element={<Login />}></Route>
-    //     <Route path='register' element={<Register />}></Route>
-    //     <Route element={<Protected></Protected>}>
-    //       <Route path='profile' element={<Profile />}></Route>
-    //       <Route path='users' element={<DisplayUsers />}></Route>
-    //       <Route path='request/submit' element={<SubmitRequest />}></Route>
-    //       <Route path='profile/edit' element={<EditProfile />}></Route>
-    //     </Route>
-    //   </Routes>
-    // </BrowserRouter>
-    <Navigation></Navigation>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Login />}></Route>
+        <Route path='register' element={<Register />}></Route>
+        <Route element={<Protected></Protected>}>
+          <Route path='profile' element={<Profile />}></Route>
+          <Route path='users' element={<DisplayUsers />}></Route>
+          <Route path='request/submit' element={<SubmitRequest />}></Route>
+          <Route path='profile/edit' element={<EditProfile />}></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    // <Navigation></Navigation>
   );
 }
 

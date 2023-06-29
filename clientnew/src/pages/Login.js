@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import './css/Login.css';
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
-import React from 'react'
 import axios from "axios";
 
 const Login = () => {
@@ -60,22 +60,33 @@ const Login = () => {
 
 
   return (
+    <div className='overall'>
     <form className="login">
-      <h1>login</h1>
-      <input type="text"
-             placeholder="username"
-             value={username}
-             onChange={(event) => {setUsername(event.target.value)}}
-             required/>
-      <input type="password"
-             placeholder="password"
-             value={password}
-             onChange={(event) => {setPassword(event.target.value)}}
-             required/>
-      <button onClick={handleLogin}>login</button> 
-      <Link to='/register'>register</Link>      
-      {errorMsg && <p>{ errorMsg }</p>}   
-    </form>
+      <h1>daisy.</h1>
+      <div>
+        <input type="text"
+              placeholder="username"
+              value={username}
+              onChange={(event) => {setUsername(event.target.value)}}
+              required/>        
+      </div>
+      <div>
+        <input type="password"
+              placeholder="password"
+              value={password}
+              onChange={(event) => {setPassword(event.target.value)}}
+              required/>        
+      </div>
+      {errorMsg && <p>{ errorMsg }</p>} 
+      <button className='login-button' onClick={handleLogin}>log in</button> 
+      </form>      
+      <div className='register'>
+        <p>don't have an account?</p>
+        <button>register</button>         
+      </div>
+      {/* <Link to='/register'>register</Link>       */}
+      </div>
+
   )
 }
 

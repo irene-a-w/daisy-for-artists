@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap');
+@import 'bootstrap/dist/css/bootstrap.css';
 
 * {
     box-sizing: border-box;
@@ -6,10 +7,10 @@
 
 body {
     margin: 0;
+    font-family: 'DM Serif Text', serif;
 }
 
 .navigation {
-    font-family: 'DM Serif Text', serif;
     background-color: #f4acb7; 
     color: #9d8189;
     display: flex;
@@ -37,15 +38,15 @@ body {
     background-color: #ffe5d9;
     font-family: inherit;
     border: none;
-    border-radius: 7px;
-    padding: 0.75rem;
-    margin: 5px;
+    padding: 0.50rem;
     width: 300px;
 }
 
 .right input:focus, textarea:focus {
     outline: none !important;
-    border: 2px solid #9d8189;
+    background-color: #ffe5d9 !important;
+    border: 2px solid #9d8189 !important;
+    box-shadow: none !important;
   }
 
 .right button{
@@ -53,6 +54,10 @@ body {
     font-family: inherit;
     color: #9d8189;
     border: none;
-    border-radius: 7px;
     margin-right: 15px;
+}
+
+.right button:hover{
+    background-color: #9d8189 !important;
+    color: #ffe5d9;
 }

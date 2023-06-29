@@ -1,4 +1,4 @@
-import './Navigation.css';
+import './css/Navigation.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
@@ -34,14 +34,22 @@ const Navigation = () => {
     <nav className="navigation">
         <h1>daisy.</h1>
         <div className="right">
-            <input type="text"
-            placeholder="search for a user"
-            value={searchString}
-            onChange={(event) => {setSearchString(event.target.value)}}/>
-            <button onClick={() => setSearchButton(true)}>search</button>
+            <div className="input-group">
+                <input type="search" 
+                className="form-control rounded" 
+                placeholder="search for a user" 
+                aria-label="Search" 
+                aria-describedby="search-addon"
+                value={searchString}
+                onChange={(event) => {setSearchString(event.target.value)}}
+                />
+                <button type="button" 
+                className="btn btn-outline-primary" 
+                onClick={() => setSearchButton(true)}>search</button>
+            </div>            
             <a>my profile</a>
+            {/* <Link to="/profile" state={{currentUserID: sessionStorage.getItem("userID")}}>my profile</Link> */}
         </div>
-        {/* <Link to="/profile" state={{currentUserID: sessionStorage.getItem("userID")}}>my profile</Link> */}
     </nav>
   )
 }

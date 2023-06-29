@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'DM Serif Text', serif;
+}
+
+.overall{
+    background-color: #f4acb7;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    outline-style: dotted;
+    outline-color: white;
+    border-radius: 25px;
+    align-items: center;
+    position: absolute;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    padding: 3vw 7vw;
+    white-space: nowrap;
+}
+
+.login {
+    align-items: center;
+}
+
+.login h1, p{
+    color: #9d8189;
+}
+
+.login input{
+    background-color: #ffe5d9;
+    font-family: inherit;
+    border: none;
+    border-radius: 10px;
+    padding: 0.70rem;
+    width: 300px;
+    margin: 0.5rem;
+}
+
+.login input:focus{
+    outline: none;
+    border: 2px solid #9d8189;
+}
+
+.login button{
+    background-color: #ffcad4;
+    font-family: inherit;
+    color: #9d8189;
+    border: none;
+    border-radius: 10px;
+    width: 150px;
+}
+
+.login button:hover{
+    background-color: #9d8189;
+    color: #ffe5d9;
+}
+
+.register{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    width: 16rem;
+    margin: 1rem;
+}
+
+.register p{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.register button{
+    background-color: #ffcad4;
+    font-family: inherit;
+    color: #9d8189;
+    border: none;
+    border-radius: 10px;
+    width: 75px;
+}
+
+.register button:hover{
+    background-color: #9d8189;
+    color: #ffe5d9;
+}
+
