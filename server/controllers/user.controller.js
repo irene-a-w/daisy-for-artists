@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user.js') ;
 const Profile = require('../models/profile.js');
+const Request = require('../models/request.js');
 
 
 const createUser = asyncHandler(async (req, res) => {
@@ -93,19 +94,27 @@ const changeUsername = asyncHandler(async (req, res) => {
     if (findUser) {
         return res.status(403).json({ message: 'Choose a diff username' });
     }
-    const updateUsername = await User.findByIdAndUpdate(req.query.id, {
+    const updateUsername = await User.findByIdAndUpdate(req.params.id, {
         username: req.body.username
       });
-    res.status(200).json(updateUsername);
-    res.send(updateUsername);
+    const updateProfileUsername = await Profile.findOneAndUpdate({user: req.params.id}, {
+        username: req.body.username
+    });
+    const updateRequesterUsername = await Request.updateMany({requester: req.params.id}, {
+        requesterUsername: req.body.username
+    });
+    const updateRequesteeUsername = await Request.updateMany({requestee: req.params.id}, {
+        requesteeUsername: req.body.username
+    });
+    
+    res.status(200).json(updateUsername, updateProfileUsername, updateRequesterUsername, updateRequesteeUsername);
 });
 
 const changePassword = asyncHandler(async (req, res) => {
-    const updateUserPassword = await User.findByIdAndUpdate(req.query.id, {
+    const updateUserPassword = await User.findByIdAndUpdate(req.params.id, {
         password: req.body.password
       });
     res.status(200).json(updateUserPassword);
-    res.send(updateUserPassword);
 });
 
 const getUserProfile = asyncHandler(async (req, res) => {
@@ -115,12 +124,12 @@ const getUserProfile = asyncHandler(async (req, res) => {
     })
 });
 
-const changeUserProfile = asyncHandler(async (req, res) => {
-    const updatedProfile = await User.findByIdAndUpdate(req.query.id, {
+const changeUserBio = asyncHandler(async (req, res) => {
+    const updatedProfile = await Profile.findOneAndUpdate({user: req.params.id},
+     {
         bio: req.body.bio
     });
     res.status(200).json(updatedProfile);
-    res.send(updatedProfile);
 })
 
 // TODO this may need to be fixed???
@@ -149,6 +158,6 @@ module.exports = {
     changeUsername,
     changePassword,
     getUserProfile,
-    changeUserProfile,
+    changeUserBio,
     findMatchingUsers
 }

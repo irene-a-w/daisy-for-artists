@@ -8,7 +8,7 @@ const {
     changeUsername,
     changePassword,
     getUserProfile,
-    changeUserProfile,
+    changeUserBio,
     findMatchingUsers
   } = require('../controllers/user.controller.js');
 const { protect } = require('../middleware/authMiddleware.js');
@@ -22,7 +22,7 @@ router.route('/login').post(loginUser);
 router.route('/profile/edit/username/:id').patch(protect, changeUsername);
 router.route('/profile/edit/password/:id').patch(protect, changePassword);
 router.route('/profile/:id').get(getUserProfile);
-router.route('/profile/edit/bio/:id').get(protect, changeUserProfile);
+router.route('/profile/edit/bio/:id').patch(protect, changeUserBio);
 router.route('/find').get(findMatchingUsers);
 
 module.exports = router;

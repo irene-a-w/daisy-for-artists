@@ -37,21 +37,22 @@ const createRequest = async(req, res) => {
         }
 };
 
-// TODO need to change requester to requestee
+// only need to get all requests for the REQUESTER
 const getAllRequests = async (req, res) => {
-    const allRequests = await Request.find({ requestee: req.query.id });
+    const allRequests = await Request.find({ requester: req.params.userid });
     res.status(200).json(allRequests)
 };
 
 const getAllRequestsByStatus = async (req, res) => {
-    const requests = await Request.find({ status: req.query.status, requestee: req.query.id })
+    const requests = await Request.find({ status: req.query.status, requestee: req.params.userid })
     res.status(200).json(requests)
 };
 
 const updateRequestStatus = async (req, res) => {
     // (temp) make sure only requested can edit request status
+    // TODO need to fix this idk if its authenticated
     const request = await Request.findById(req.params.id)
-    if (request.requester.toString() == req.user.id) {
+    if (req.body.requesteeID === request.requesteeID) {
         const updateRequestStatus = await Request.findByIdAndUpdate(req.params.id, {
         status: req.body.status
         });

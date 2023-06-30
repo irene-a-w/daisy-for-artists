@@ -21,11 +21,17 @@ const requestSchema = new mongoose.Schema({
     },
     requesterUsername: {
         type: String,
+        lowercase: true,
         required: true
     },
     requestee: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User',
+        required: true
+    },
+    requesteeUsername: {
+        type: String,
+        lowercase: true,
         required: true
     }},
     {
