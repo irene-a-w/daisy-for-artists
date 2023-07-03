@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'DM Serif Text', serif;
+}
+
+.profile-side{
+    background-color: #ffcad4;
+    float: left;
+    height: 100vh;
+    width: 25%;
+    overflow: auto;
+}
+
+.profile-card{
+    background-color: #ffe5d9;
+    color: #9d8189;
+    border-radius: 10px;
+    text-align: center;
+    width: 65%;
+    height: 45%;
+    margin: auto;
+    position: relative;
+    top: 5%;
+}
+
+.profile-logout{
+    background-color: #f4acb7;
+    font-size: large;
+    color: #9d8189;
+    border: none;
+    border-radius: 10px;
+    width: 6rem;
+    float: right;
+    margin-top: 1rem;
+    margin-right: 1rem;
+}
+
+.profile-card h1{
+    margin-top: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-card p{
+    width: 85%;
+    margin: auto;
+}
+
+.profile-card button{
+    background-color: #f4acb7;
+    font-size: large;
+    color: #9d8189;
+    border: none;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    position:absolute; 
+    margin-left:-50px;
+    left:50%;
+    width:110px;
+    bottom:0px;
+}
+
+.profile-side button:hover{
+    color: #ffcad4;
+}
+
+.requests-side{
+    background-color: #d8e2dc;
+    float: right;
+    height: 100vh;
+    width: 75%;
+    overflow: auto;
+}

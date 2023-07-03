@@ -19,7 +19,7 @@ const Login = () => {
   const handleLogin = async (e) => { 
     console.log("entering here");
     const url = "http://localhost:8080/api/users/login"
-    const loginUser = { username: username, password: password};    
+    const loginUser = { username: username.toLowerCase(), password: password};    
     e.preventDefault();
     try {
       const userResponse = await axios.post(url, loginUser);
@@ -36,9 +36,9 @@ const Login = () => {
       if (!error?.response) {
         setErrorMsg('No Server Response');
     } else if (error.response?.status === 400) {
-        setErrorMsg('invalid username or password');
+        setErrorMsg('invalid username or password.');
     } else {
-        setErrorMsg('login Failed');
+        setErrorMsg('login failed.');
     }}
   }
 
@@ -60,8 +60,8 @@ const Login = () => {
 
 
   return (
-    <div className='overall'>
-    <form className="login">
+    <div className='login-overall'>
+    <form className="login-input-box">
       <h1>daisy.</h1>
       <div>
         <input type="text"
@@ -77,12 +77,12 @@ const Login = () => {
               onChange={(event) => {setPassword(event.target.value)}}
               required/>        
       </div>
-      {errorMsg && <p>{ errorMsg }</p>} 
-      <button className='login-button' onClick={handleLogin}>log in</button> 
+      <p className='login-error'>{ errorMsg }</p>
+      <button onClick={handleLogin}>log in</button> 
       </form>      
-      <div className='register'>
+      <div className='login-register-route'>
         <p>don't have an account?</p>
-        <button>register</button>         
+        <button onClick={() => navigate('/register')}>register</button>         
       </div>
       {/* <Link to='/register'>register</Link>       */}
       </div>

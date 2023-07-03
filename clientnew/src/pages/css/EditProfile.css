@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'DM Serif Text', serif;
+}
+
+.edit-profile{
+    background-color: #ffe5d9;
+    color: #9d8189;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    width: 65%;
+    height: 45%;
+    margin: auto;
+    position: relative;
+    top: 5%;
+}

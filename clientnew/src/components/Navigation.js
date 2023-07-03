@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
-    // let navigate = useNavigate(); 
+    let navigate = useNavigate(); 
 
     const [searchString, setSearchString] = useState('');
     const [searchButton, setSearchButton] = useState(false);  
@@ -24,16 +24,16 @@ const Navigation = () => {
         }      
       }
     
-    // if (searchButton) {
-    //     handleSearch().then(res => 
-    //         {navigate('/users', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID")))}})}
-    //     )
-    // }
+    if (searchButton) {
+        handleSearch().then(res => 
+            {navigate('/users', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID")))}})}
+        )
+    }
 
   return (
     <nav className="navigation">
         <h1>daisy.</h1>
-        <div className="right">
+        <div className="nav-right">
             <div className="input-group">
                 <input type="search" 
                 className="form-control rounded" 
@@ -47,8 +47,8 @@ const Navigation = () => {
                 className="btn btn-outline-primary" 
                 onClick={() => setSearchButton(true)}>search</button>
             </div>            
-            <a>my profile</a>
-            {/* <Link to="/profile" state={{currentUserID: sessionStorage.getItem("userID")}}>my profile</Link> */}
+            {/* <p onClick={() => navigate('/profile', {state: {currentUserID: sessionStorage.getItem("userID")}})}>my profile</p> */}
+            <Link className='nav-link' to="/profile" state={{currentUserID: sessionStorage.getItem("userID")}}>my profile</Link>
         </div>
     </nav>
   )

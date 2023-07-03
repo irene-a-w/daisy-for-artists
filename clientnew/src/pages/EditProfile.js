@@ -1,3 +1,5 @@
+import './css/EditProfile.css';
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -66,9 +68,9 @@ const EditProfile = () => {
   }
 
   return (
-    <div>
-      <section className='username'>
-      <h1>change username</h1>
+    <div className='edit-profile'>
+      <section className='edit-username'>
+      <p>change username</p>
       <input type="text"
              value={newUsername}
              onChange={(event) => {setUsername(event.target.value)}}
@@ -76,16 +78,16 @@ const EditProfile = () => {
       <button onClick={handleUsernameChange}>save</button>
       {errorMsg && <p>{ errorMsg }</p>}  
       </section>
-      <section className='password'>
-      <h1>change password</h1>
+      <section className='edit-password'>
+      <p>change password</p>
       <input type="text"
              value={newPassword}
              onChange={(event) => {setPassword(event.target.value)}}
              required/>
       <button onClick={handlePasswordChange}>save</button>
       </section>
-      <section className='bio'>
-      <h1>change bio</h1>
+      <section className='edit-bio'>
+      <p>change bio</p>
       <textarea 
              value={newBio}
              onChange={(event) => {setBio(event.target.value)}}

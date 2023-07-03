@@ -5,7 +5,7 @@
     font-family: 'DM Serif Text', serif;
 }
 
-.login-overall{
+.register-overall{
     background-color: #f4acb7;
     text-align: center;
     display: flex;
@@ -24,16 +24,17 @@
     white-space: nowrap;
 }
 
-.login-input-box {
+.register-input-box {
     align-items: center;
 }
 
-.login-input-box h1, p{
+.register-input-box h1, p{
     color: #9d8189;
 }
 
-.login-input-box input{
+.register-input-box input{
     background-color: #ffe5d9;
+    font-family: inherit;
     border: none;
     border-radius: 10px;
     padding: 0.70rem;
@@ -42,13 +43,13 @@
     text-transform: lowercase;
 }
 
-.login-input-box input:focus{
+.register-input-box input:focus{
     /* outline: 2px solid #9d8189; */
     outline: none;
     box-shadow: 2px 3px #9d8189;
 }
 
-.login-input-box button{
+.register-input-box button{
     background-color: #ffcad4;
     font-size: large;
     color: #9d8189;
@@ -58,30 +59,30 @@
     margin-bottom: 1rem;
 }
 
-.login-input-box button:hover{
+.register-input-box button:hover{
     background-color: #9d8189;
     color: #ffe5d9;
 }
 
-.login-error{
+.register-error{
     height: 1rem;
 }
 
-.login-register-route{
+.register-login-route{
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: space-between;
-    width: 16rem;
+    width: 17rem;
     margin: 1rem;
 }
 
-.login-register-route p{
+.register-login-route p{
     margin-top: auto;
     margin-bottom: auto;
 }
 
-.login-register-route button{
+.register-login-route button{
     background-color: #ffcad4;
     font-family: inherit;
     color: #9d8189;
@@ -90,8 +91,7 @@
     width: 75px;
 }
 
-.login-register-route button:hover{
+.register-login-route button:hover{
     background-color: #9d8189;
     color: #ffe5d9;
 }
-

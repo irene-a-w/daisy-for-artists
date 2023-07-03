@@ -1,3 +1,5 @@
+import './css/Register.css';
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -18,7 +20,7 @@ export const Register = () => {
     }, [username, password])
 
     const url = "http://localhost:8080/api/users/"
-    const createUser = { email: email, username: username, password: password};
+    const createUser = { email: email, username: username.toLowerCase(), password: password};
     const handleSubmit = async (e) => { 
       e.preventDefault();
       try {
@@ -39,32 +41,44 @@ export const Register = () => {
       } else if (error.response?.status === 403 && error.response?.data.message === 'username exists') {
         setErrorMsg('username already in use.');
       } else {
-          setErrorMsg('error: unable to create account.');
+          setErrorMsg('unable to create account.');
       }}
     }
 
   return (
-    <form className="register">
-      <h1>create account</h1>
+    <div className='register-overall'>
+    <form className="register-input-box">
+      <h1>daisy.</h1>
+      <div>
       <input type="text"
              placeholder="email"
              value={email}
              onChange={(event) => {setEmail(event.target.value)}}
              required/>
+      </div>    
+      <div>
+      
       <input type="text"
              placeholder="username"
              value={username}
              onChange={(event) => {setUsername(event.target.value)}}
              required/>
-      <input type="password"
+      </div>  
+      <div>
+      <input type="text"
              placeholder="password"
              value={password}
              onChange={(event) => {setPassword(event.target.value)}}
-             required/>
-      <button onClick={handleSubmit}>register</button> 
-      <Link to='/'>login</Link> 
-      {errorMsg && <p>{ errorMsg }</p>}    
+             required/>        
+      </div>
+      <p className='register-error'>{ errorMsg }</p>
+      <button onClick={handleSubmit}>register</button>              
     </form>
+      <div className='register-login-route'>
+        <p>already have an account?</p>
+        <button onClick={() => navigate('/')}>login</button>         
+      </div>
+    </div>
   )
 }
 

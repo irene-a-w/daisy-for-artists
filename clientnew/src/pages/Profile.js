@@ -1,9 +1,12 @@
+import './css/Profile.css';
+
 import React from 'react';
 import axios from 'axios';
 
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import Navigation from '../components/Navigation';
 import DisplayRequests from '../components/DisplayRequests';
 
 // TODO need to implement getting a specific users profile
@@ -76,25 +79,20 @@ const Profile = () => {
 
   return (
     <div>
+      <Navigation></Navigation>
+    <section className='profile-side'>
       {currentUserID === sessionStorage.getItem("userID") && 
-      <div>
-        <h1>your profile</h1>
-        <button onClick={() => {navigate('/profile/edit')}}>edit profile</button>
-        <button onClick={logout}>logout</button>
-      </div>      
-      }
-    <section className='profile'>
-    <h1>{username}</h1>
-    <p>{bio}</p>
+        <button className='profile-logout' onClick={logout}>logout</button>} 
+      <div className='profile-card'>          
+        <h1>{username}</h1> 
+        <p>{bio}</p> 
+        {currentUserID === sessionStorage.getItem("userID") && 
+          <button className='profile-edit' onClick={() => {navigate('/profile/edit')}}>save profile</button>}   
+      </div>
     </section>
-    <section className='requests'>
+    <section className='requests-side'>
       <h1>requests</h1>
-    </section>      
-    <input type="text"
-             placeholder="search for user"
-             value={searchString}
-             onChange={(event) => {setSearchString(event.target.value)}}></input>
-    <button onClick={searchClicked}>search</button>
+  
     {currentUserID !== sessionStorage.getItem("userID") && 
     <div>
       <button onClick={() => {navigate('/request/submit', {state: {requestee: currentUserID}})}}>request</button>
@@ -104,6 +102,7 @@ const Profile = () => {
     {currentUserID === sessionStorage.getItem("userID") && <DisplayRequests userID={sessionStorage.getItem("userID")} status={null}></DisplayRequests>}
     <h1>received requests</h1>
     <DisplayRequests userID={currentUserID} status={"Requested"}></DisplayRequests>
+    </section>   
     </div>
   )
 }

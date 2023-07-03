@@ -27,14 +27,14 @@ body {
     padding-left: 1rem;
 }
 
-.right {
+.nav-right {
     display: flex;
     white-space: nowrap;
     align-items: center;
     font-size: larger;
 }
 
-.right input{
+.nav-right input{
     background-color: #ffe5d9;
     font-family: inherit;
     border: none;
@@ -42,14 +42,14 @@ body {
     width: 300px;
 }
 
-.right input:focus, textarea:focus {
+.nav-right input:focus, textarea:focus {
     outline: none !important;
     background-color: #ffe5d9 !important;
     border: 2px solid #9d8189 !important;
     box-shadow: none !important;
   }
 
-.right button{
+.nav-right button{
     background-color: #ffcad4;
     font-family: inherit;
     color: #9d8189;
@@ -57,7 +57,16 @@ body {
     margin-right: 15px;
 }
 
-.right button:hover{
+.nav-right button:hover{
     background-color: #9d8189 !important;
     color: #ffe5d9;
+}
+
+.nav-link{
+    color: #9d8189;
+    text-decoration: none;
+}
+
+.nav-link:hover{
+    color: #ffe5d9; 
 }
