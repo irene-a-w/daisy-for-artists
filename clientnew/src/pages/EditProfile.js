@@ -69,7 +69,7 @@ const EditProfile = () => {
 
   return (
     <div className='edit-profile'>
-      <section className='edit-username'>
+      <div className='edit-username'>
       <p>change username</p>
       <input type="text"
              value={newUsername}
@@ -77,23 +77,25 @@ const EditProfile = () => {
              required/>
       <button onClick={handleUsernameChange}>save</button>
       {errorMsg && <p>{ errorMsg }</p>}  
-      </section>
-      <section className='edit-password'>
+      </div>
+      <div className='edit-password'>
       <p>change password</p>
       <input type="text"
              value={newPassword}
              onChange={(event) => {setPassword(event.target.value)}}
              required/>
       <button onClick={handlePasswordChange}>save</button>
-      </section>
-      <section className='edit-bio'>
+      </div>
+      <div className='edit-bio'>
       <p>change bio</p>
-      <textarea 
+      <textarea
              value={newBio}
+             placeholder='max 150 characters'
              onChange={(event) => {setBio(event.target.value)}}
+             maxLength={150}
              required/>
       <button onClick={handleBioChange}>save</button>
-      </section>
+      </div>
     </div>
   )
 }

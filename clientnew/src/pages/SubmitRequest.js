@@ -1,3 +1,5 @@
+import './css/SubmitRequest.css';
+
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -26,19 +28,23 @@ const SubmitRequest = () => {
 
     // on click create a form
   return (
-    <div>
-        <h1>request</h1>
-        <p>title</p>
-        <input
-        value={requestTitle}
-        onChange={(event) => {setRequestTitle(event.target.value)}}>
-        </input>
-        <p>description</p>
-        <textarea 
-        value={requestDescription}
-        onChange={(event) => {setRequestDescription(event.target.value)}}>
-        </textarea>
-        <button onClick={sendRequest}>submit</button>
+    <div className='submit-request'>
+        <h1>new request</h1>
+        <div>
+          <p>title</p>
+          <input
+          value={requestTitle}
+          onChange={(event) => {setRequestTitle(event.target.value)}}>
+          </input>          
+        </div>
+      <div>
+          <p>description</p>
+          <textarea
+          value={requestDescription}
+          onChange={(event) => {setRequestDescription(event.target.value)}}>
+          </textarea>     
+      </div>
+      <button onClick={sendRequest}>submit</button>  
     </div>
   )
 }
