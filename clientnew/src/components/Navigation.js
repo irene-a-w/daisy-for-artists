@@ -26,7 +26,7 @@ const Navigation = () => {
     
     if (searchButton) {
         handleSearch().then(res => 
-            {navigate('/users', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID")))}})}
+            {navigate('/users', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID"))), searchStr: searchString}})}
         )
     }
 

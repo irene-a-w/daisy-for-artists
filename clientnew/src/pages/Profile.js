@@ -20,9 +20,7 @@ const Profile = () => {
  
 
   console.log("profile ID", currentUserID);
-
-  const [searchString, setSearchString] = useState('');
-  const [searchButton, setSearchButton] = useState(false);  
+ 
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
 
@@ -30,33 +28,6 @@ const Profile = () => {
   const logout = () => {
     sessionStorage.clear();
     navigate("/");
-  }
-
-  // search for a user -> this should probably be moved to the nav bar component
-  const handleSearch = async () => {
-    const url = "http://localhost:8080/api/users/find"
-    console.log("search str ", searchString);
-    const searchResponse = await axios.get(url, 
-      {params: {
-        username: searchString
-      }});
-    console.log("searchres ", searchResponse.data)
-    if (searchResponse.status === 200) {
-      return searchResponse.data
-    } else if (searchResponse.status === 404) {
-      return []
-    }      
-  }
-
-  const searchClicked = () => {
-    setSearchButton(true);
-  }
-
-  // send the found users over to the linked page
-  if (searchButton) {
-    handleSearch().then(res => 
-      {navigate('/users', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID")))}})}
-    )
   }
 
   // retrieve user profile
@@ -77,6 +48,8 @@ const Profile = () => {
     retrieveUserInfo();
   })
 
+  console.log("checking username is set", username, currentUserID, bio)
+
   return (
     <div>
       <Navigation></Navigation>
@@ -87,21 +60,19 @@ const Profile = () => {
         <h1>{username}</h1> 
         <p>{bio}</p> 
         {currentUserID === sessionStorage.getItem("userID") && 
-          <button className='profile-edit' onClick={() => {navigate('/profile/edit')}}>save profile</button>}   
+          <button className='profile-edit' onClick={() => {navigate('/profile/edit')}}>edit profile</button>} 
+        {currentUserID !== sessionStorage.getItem("userID") && 
+          <button onClick={() => {navigate('/request/submit', {state: {requestee: currentUserID, requesteeUsername: username}})}}>submit request</button>}
       </div>
     </section>
     <section className='requests-side'>
-      <h1>requests</h1>
-  
-    {currentUserID !== sessionStorage.getItem("userID") && 
-    <div>
-      <button onClick={() => {navigate('/request/submit', {state: {requestee: currentUserID}})}}>request</button>
-    </div>
-    }
-    <h1>sent requests</h1>
-    {currentUserID === sessionStorage.getItem("userID") && <DisplayRequests userID={sessionStorage.getItem("userID")} status={null}></DisplayRequests>}
-    <h1>received requests</h1>
-    <DisplayRequests userID={currentUserID} status={"Requested"}></DisplayRequests>
+      {currentUserID === sessionStorage.getItem("userID") && 
+      <div>
+        <h1>sent requests</h1>
+        <DisplayRequests userID={sessionStorage.getItem("userID")} status={null}></DisplayRequests>        
+      </div>}
+      <h1>received requests</h1>
+      <DisplayRequests userID={currentUserID} status={"Requested"}></DisplayRequests>
     </section>   
     </div>
   )

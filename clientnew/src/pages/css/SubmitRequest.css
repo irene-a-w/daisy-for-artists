@@ -11,13 +11,17 @@
     border-radius: 10px;
     text-align: center;
     align-items: center;
-    width: 65%;
-    height: 45%;
-    margin: auto;
-    position: relative;
-    top: 5%;
+    justify-content: center;
+    width: 50%;
+    height: 34rem;
+    position: absolute;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    padding-top: 1rem;
 }
 
 .submit-request div{
@@ -30,7 +34,7 @@
 }
 
 .submit-request h1{
-    font-size: larger;
+    font-size: x-large;
 }
 
 .submit-request button{
@@ -44,7 +48,15 @@
     height: 2rem;
 }
 
-.submit-request p{
+.submit-request-error{
+    font-size: small;
+    width: 60%;
+    margin: auto;
+    margin-top: 0.5rem;
+    height: 1rem;
+}
+
+.submit-request-title, .submit-request-desc{
     margin-top: auto;
     margin-bottom: auto;
     width: 8rem;
@@ -80,3 +92,20 @@
     box-shadow: 2px 3px #9d8189;
 }
 
+.submit-request-return{
+    background-color: #f4acb7;
+    color: #9d8189;
+    border: none;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    position:absolute; 
+    margin-left:-50px;
+    left:50%;
+    bottom:2%;
+}
+
+.submit-request-return:hover{
+    color: #ffcad4;
+}

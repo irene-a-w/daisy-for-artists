@@ -11,13 +11,21 @@
     border-radius: 10px;
     text-align: center;
     align-items: center;
-    width: 65%;
-    height: 45%;
-    margin: auto;
-    position: relative;
-    top: 5%;
+    justify-content: center;
+    width: 50%;
+    height: 60%;
+    position: absolute;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    padding-top: 1rem;
+}
+
+.edit-profile h1{
+    font-size: x-large;
 }
 
 .edit-profile button{
@@ -30,6 +38,10 @@
     margin-left: 0.5rem;
 }
 
+.edit-profile button:hover{
+    color: #ffcad4;
+}
+
 .edit-profile div{
     display: flex;
     flex-direction: row;
@@ -39,7 +51,7 @@
     margin-bottom: 1rem;
 }
 
-.edit-profile p{
+.edit-username p, .edit-password p, .edit-bio p{
     margin-top: auto;
     margin-bottom: auto;
     width: 8rem;
@@ -65,8 +77,7 @@
     border: none;
     border-radius: 10px;
     padding: 0.5rem;
-    margin: 0.5rem;
-    text-transform: lowercase;
+    margin-top: 0.5rem;
     resize: none;
 }
 
@@ -75,4 +86,29 @@
     box-shadow: 2px 3px #9d8189;
 }
 
+.edit-profile-error{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 1rem;
+    font-size: small;
+    margin-bottom: 0.5rem;
+}
 
+.edit-profile-return{
+    background-color: #f4acb7;
+    color: #9d8189;
+    border: none;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    position:absolute; 
+    margin-left:-50px;
+    left:50%;
+    bottom:10%;
+}
+
+.edit-profile-return:hover{
+    color: #ffcad4;
+}

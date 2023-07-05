@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'DM Serif Text', serif;
+}
+
+.display-users-res{
+    text-align: center;
+    align-items: center;
+    color: #9d8189;
+}
+
+.display-users-res h1{
+    background-color: #ffcad4;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    padding: 0.5rem;
+    width: 60%;
+}
+
+.display-user-card{
+    background-color: #d8e2dc;
+    text-align: center;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+.display-user-card:hover{
+    cursor: pointer;
+    background-color: #ffe5d9;
+}

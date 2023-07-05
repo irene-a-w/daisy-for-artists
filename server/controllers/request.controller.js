@@ -13,13 +13,15 @@ const createRequest = async(req, res) => {
     const newRequester = req.body.requester;
     const newRequesterUsername = req.body.requesterUsername;
     const newRequestee = req.body.requestee;
+    const newRequesteeUsername = req.body.requesteeUsername;
 
     const newRequest = new Request({
     title: newTitle,
     description: newDescrip,
     requester: newRequester,
     requesterUsername: newRequesterUsername,
-    requestee: newRequestee
+    requestee: newRequestee,
+    requesteeUsername: newRequesteeUsername
     });
 
     try {

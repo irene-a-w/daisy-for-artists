@@ -1,50 +1,66 @@
 import './css/SubmitRequest.css';
-
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-
+import Navigation from '../components/Navigation';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const SubmitRequest = () => {
+    let navigate = useNavigate(); 
     const {state} = useLocation();
-    const { requestee } = state;
+    const { requestee, requesteeUsername } = state;
 
     const [requestTitle, setRequestTitle] = useState('');
     const [requestDescription, setRequestDescription] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
     // send form
     const sendRequest = async () => {
-        console.log("req reqee", requestee, sessionStorage.getItem("userID"));
-        const url = "http://localhost:8080/api/requests/create"
-        const headers = {
-        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+        if (requestTitle === '' || requestDescription === '') {
+          setErrorMsg('please fill out all fields.')
+        } else {
+          console.log("req reqee", requestee, sessionStorage.getItem("userID"));
+          const url = "http://localhost:8080/api/requests/create"
+          const headers = {
+          'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+          }
+          const createRequest = {title: requestTitle, description: requestDescription, 
+            requester: sessionStorage.getItem("userID"), requesterUsername: sessionStorage.getItem("username"), requestee: requestee, 
+            requesteeUsername: requesteeUsername} 
+          console.log("sent data", createRequest);   
+          const requestResponse = await axios.post(url, createRequest, {headers: headers});
+          console.log("request", requestResponse);
+          setErrorMsg('successfully submitted');
         }
-        const createRequest = {title: requestTitle, description: requestDescription, 
-          requester: sessionStorage.getItem("userID"), requesterUsername: sessionStorage.getItem("username"), requestee: requestee} 
-        console.log("sent data", createRequest);   
-        const requestResponse = await axios.post(url, createRequest, {headers: headers});
-        console.log("request", requestResponse);
     }
+
+    useEffect(() => {
+      setErrorMsg('');
+    }, [requestTitle, requestDescription])
 
     // on click create a form
   return (
-    <div className='submit-request'>
-        <h1>new request</h1>
+    <div>
+      <Navigation />
+      <div className='submit-request'>
+          <h1>new request</h1>
+          <div>
+            <p className='submit-request-title'>title</p>
+            <input
+            value={requestTitle}
+            onChange={(event) => {setRequestTitle(event.target.value)}}>
+            </input>          
+          </div>
         <div>
-          <p>title</p>
-          <input
-          value={requestTitle}
-          onChange={(event) => {setRequestTitle(event.target.value)}}>
-          </input>          
+            <p className='submit-request-desc'>description</p>
+            <textarea
+            value={requestDescription}
+            onChange={(event) => {setRequestDescription(event.target.value)}}>
+            </textarea>     
         </div>
-      <div>
-          <p>description</p>
-          <textarea
-          value={requestDescription}
-          onChange={(event) => {setRequestDescription(event.target.value)}}>
-          </textarea>     
+        <button onClick={sendRequest}>submit</button>  
+        <p className='submit-request-error'>{ errorMsg }</p>
       </div>
-      <button onClick={sendRequest}>submit</button>  
+      <button className='submit-request-return' onClick={()=> {navigate('/profile', {state: {currentUserID: requestee}})}}>return to profile</button>
     </div>
   )
 }

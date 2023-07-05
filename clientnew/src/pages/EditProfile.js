@@ -2,10 +2,15 @@ import './css/EditProfile.css';
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
+import Navigation from '../components/Navigation';
 
 const EditProfile = () => {
   // create 3 functions to get patch request
   // need to use state to keep track
+  let navigate = useNavigate(); 
+
   const [newUsername, setUsername] = useState('');
   const [newPassword, setPassword] = useState('');
   const [newBio, setBio] = useState('');
@@ -19,42 +24,52 @@ const EditProfile = () => {
 
   useEffect(() => {
     setErrorMsg('');
-  }, [newUsername])
+  }, [newUsername, newPassword, newBio])
 
   // send queries function -> display success message
   // each button will be defined to do a different query
   const handleUsernameChange = async () => { 
-    const userID = sessionStorage.getItem("userID");
-    const url = "http://localhost:8080/api/users/profile/edit/username/" + userID;
-    try {
-      const newUsernameRequest = await axios.patch(url, {username: newUsername}, {headers: headers});
-      if (newUsernameRequest.status === 200) {
-        setErrorMsg('successfully changed');
-      }
-    } catch (error) {
-      if (!error?.response) {
-        setErrorMsg('No Server Response');
-    } else if (error.response?.status === 403) {
-        setErrorMsg('username already in use');
+    const specialChar =/[`!@#$%^&*()\+=\[\]{};':"\\|,<>\/?~ ]/;
+    if (newUsername === '' || specialChar.test(newUsername)) {
+      setErrorMsg('please enter a valid username.')
     } else {
-        setErrorMsg('change username failed');
-    }}
+      const userID = sessionStorage.getItem("userID");
+      const url = "http://localhost:8080/api/users/profile/edit/username/" + userID;
+      try {
+        const newUsernameRequest = await axios.patch(url, {username: newUsername}, {headers: headers});
+        if (newUsernameRequest.status === 200) {
+          setErrorMsg('successfully changed');
+        }
+      } catch (error) {
+        if (!error?.response) {
+          setErrorMsg('No Server Response');
+      } else if (error.response?.status === 403) {
+          setErrorMsg('username already in use');
+      } else {
+          setErrorMsg('change username failed');
+      }}      
+    }
   }
 
   const handlePasswordChange = async () => { 
-    const userID = sessionStorage.getItem("userID");
-    const url = "http://localhost:8080/api/users/profile/edit/password/" + userID;
-    try {
-      const newPasswordRequest = await axios.patch(url, {password: newPassword}, {headers: headers});
-      if (newPasswordRequest.status === 200) {
-        setErrorMsg('successfully changed');
-      }
-    } catch (error) {
-      if (!error?.response) {
-        setErrorMsg('No Server Response');
+    const specialChar =/ /;
+    if (newPassword === '' || specialChar.test(newPassword)) {
+      setErrorMsg('please enter a valid password.')
     } else {
-        setErrorMsg('change password Failed');
-    }}
+      const userID = sessionStorage.getItem("userID");
+      const url = "http://localhost:8080/api/users/profile/edit/password/" + userID;      
+      try {
+        const newPasswordRequest = await axios.patch(url, {password: newPassword}, {headers: headers});
+        if (newPasswordRequest.status === 200) {
+          setErrorMsg('successfully changed');
+        }
+      } catch (error) {
+        if (!error?.response) {
+          setErrorMsg('No Server Response');
+      } else {
+          setErrorMsg('change password Failed');
+      }}
+  }
   }
 
   const handleBioChange = async () => { 
@@ -68,34 +83,39 @@ const EditProfile = () => {
   }
 
   return (
-    <div className='edit-profile'>
-      <div className='edit-username'>
-      <p>change username</p>
-      <input type="text"
-             value={newUsername}
-             onChange={(event) => {setUsername(event.target.value)}}
-             required/>
-      <button onClick={handleUsernameChange}>save</button>
-      {errorMsg && <p>{ errorMsg }</p>}  
+    <div className='edit-profile-overall'>
+      <Navigation />
+      <div className='edit-profile'>
+        <h1>edit profile</h1>
+        <div className='edit-username'>
+        <p>change username</p>
+        <input type="text"
+              value={newUsername}
+              onChange={(event) => {setUsername(event.target.value)}}
+              required/>
+        <button onClick={handleUsernameChange}>save</button>
+        </div>
+        <div className='edit-password'>
+        <p>change password</p>
+        <input type="text"
+              value={newPassword}
+              onChange={(event) => {setPassword(event.target.value)}}
+              required/>
+        <button onClick={handlePasswordChange}>save</button>
+        </div>
+        <div className='edit-bio'>
+        <p>change bio</p>
+        <textarea
+              value={newBio}
+              placeholder='max 150 characters'
+              onChange={(event) => {setBio(event.target.value)}}
+              maxLength={150}
+              required/>
+        <button onClick={handleBioChange}>save</button> 
+        </div>
+        <p className='edit-profile-error'>{ errorMsg }</p>
       </div>
-      <div className='edit-password'>
-      <p>change password</p>
-      <input type="text"
-             value={newPassword}
-             onChange={(event) => {setPassword(event.target.value)}}
-             required/>
-      <button onClick={handlePasswordChange}>save</button>
-      </div>
-      <div className='edit-bio'>
-      <p>change bio</p>
-      <textarea
-             value={newBio}
-             placeholder='max 150 characters'
-             onChange={(event) => {setBio(event.target.value)}}
-             maxLength={150}
-             required/>
-      <button onClick={handleBioChange}>save</button>
-      </div>
+      <button className='edit-profile-return' onClick={()=> {navigate('/profile', {state: {currentUserID: sessionStorage.getItem("userID")}})}}>return to profile</button>
     </div>
   )
 }
