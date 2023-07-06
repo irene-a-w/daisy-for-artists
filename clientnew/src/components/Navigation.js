@@ -5,9 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
     let navigate = useNavigate(); 
-
     const [searchString, setSearchString] = useState('');
-    const [searchButton, setSearchButton] = useState(false);  
 
     const handleSearch = async () => {
         const url = "http://localhost:8080/api/users/find"
@@ -23,12 +21,6 @@ const Navigation = () => {
           return []
         }      
       }
-    
-    if (searchButton) {
-        handleSearch().then(res => 
-            {navigate('/users', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID"))), searchStr: searchString}})}
-        )
-    }
 
   return (
     <nav className="navigation">
@@ -45,9 +37,10 @@ const Navigation = () => {
                 />
                 <button type="button" 
                 className="btn btn-outline-primary" 
-                onClick={() => setSearchButton(true)}>search</button>
+                onClick={() => {handleSearch().then(res => 
+                  {navigate('/users', {state: {foundUsers: res.filter(x => x["_id"] !== (sessionStorage.getItem("userID"))), searchStr: searchString}})}
+              )}}>search</button>
             </div>            
-            {/* <p onClick={() => navigate('/profile', {state: {currentUserID: sessionStorage.getItem("userID")}})}>my profile</p> */}
             <Link className='nav-link' to="/profile" state={{currentUserID: sessionStorage.getItem("userID")}}>my profile</Link>
         </div>
     </nav>

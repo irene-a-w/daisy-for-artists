@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+.request-group{
+    width: 20%;
+    margin: 1rem;
+    text-align: center;
+}
+
+.request-group h1{
+    color: #9d8189;
+    font-size: xx-large;
+}
+
+.request-info{
+    background-color: #ffe5d9;
+    border-radius: 10px;    
+    margin: 1rem;
+    padding: 0.5rem;
+}
+
+.request-info h1{
+    color: #9d8189;
+    padding-top: 0.5rem;
+    font-size: xx-large;
+}
+
+.request-info button{
+    background-color: #f4acb7;
+    color: #9d8189;
+    border: none;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 6rem;
+}
+
+.request-info button:hover{
+    background-color: #ffcad4;
+}
+
+.request-description:hover{
+    cursor: pointer;
+    color: #f4acb7;
+}

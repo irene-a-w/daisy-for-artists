@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react'
-
 import axios from 'axios';
+import './css/DisplayRequests.css'
 
 const DisplayRequests = (props) => {
     // console.log("display req", props.userID, props.status)
     const [requests, setRequests] = useState([]);
-    // should probably pass in the user id so it can be reusable for both requestee/requester
+    const [toggle, setToggle] = React.useState({});
+
+    function toggleFunction(index) {
+      setToggle({
+        ...toggle,
+        [index]: !toggle[index],
+      });
+    }
 
     // send api request to retrieve all of the requests
     const handleRequests = async () => {
@@ -41,28 +48,31 @@ const DisplayRequests = (props) => {
     }
 
     return (
-        <div>
-        {requests.map((request) => (
-            <div>
+        <div className='request-group'>
+        {props.status && <h1>{props.status.toLowerCase()}</h1>}
+        {requests.map((request, index) => (
+            <div className='request-info'>
                <h1>{request.title}</h1> 
-               {props.status && <p>{request.requesterUsername}</p>}
-               <p>{request.status}</p>
+               <p className='request-description' onClick={() => {toggleFunction(index)}}>view description</p>
+               {toggle[index] && <p>{requests[index].description}</p>}
+               {props.status && request.requestee !== sessionStorage.getItem("userID") && <p>requested by: {request.requesterUsername}</p>}
+               <p>status: {request.status.toLowerCase()}</p>
                 {props.status === "Requested" && request.requestee === sessionStorage.getItem("userID") &&
                 <div>
-                <button onClick={() => requestStatus(request._id, request.requestee, "accepted")}>accept</button>
-                <button onClick={() => requestStatus(request._id, request.requestee, "declined")}>decline</button>
+                <button onClick={() => requestStatus(request._id, request.requestee, "Accepted")}>accept</button>
+                <button onClick={() => requestStatus(request._id, request.requestee, "Declined")}>decline</button>
                 </div>
                 }
 
-                {props.status === "accepted" && request.requestee === sessionStorage.getItem("userID") &&
+                {props.status === "Accepted" && request.requestee === sessionStorage.getItem("userID") &&
                 <div>
-                <button onClick={() => requestStatus(request._id, request.requestee, "started")}>started</button>
+                <button onClick={() => requestStatus(request._id, request.requestee, "Started")}>started</button>
                 </div>
                 }
 
-                {props.status === "started" && request.requestee === sessionStorage.getItem("userID") &&
+                {props.status === "Started" && request.requestee === sessionStorage.getItem("userID") &&
                 <div>
-                <button onClick={() => requestStatus(request._id, request.requestee, "completed")}>completed</button>
+                <button onClick={() => requestStatus(request._id, request.requestee, "Completed")}>completed</button>
                 </div>
                 }
             </div>

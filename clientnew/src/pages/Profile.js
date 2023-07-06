@@ -13,16 +13,19 @@ import DisplayRequests from '../components/DisplayRequests';
 
 const Profile = () => {
   const { state } = useLocation();
-  const { currentUserID } = state;
+  var { currentUserID } = state;
   if (!currentUserID) {
      currentUserID = sessionStorage.getItem("userID");
   }
  
-
   console.log("profile ID", currentUserID);
  
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
+  const [sent, setViewSent] = useState(false);
+  const [recieved, setViewRecieved] = useState(true);
+
+  console.log("display", sent, recieved)
 
   let navigate = useNavigate(); 
   const logout = () => {
@@ -44,6 +47,16 @@ const Profile = () => {
     }
   } 
 
+  const toggleRecieved = () => {
+    setViewSent(false);
+    setViewRecieved(true);
+  }
+
+  const toggleSent = () => {
+    setViewSent(true);
+    setViewRecieved(false);
+  }
+
   useEffect(() => {
     retrieveUserInfo();
   })
@@ -60,19 +73,34 @@ const Profile = () => {
         <h1>{username}</h1> 
         <p>{bio}</p> 
         {currentUserID === sessionStorage.getItem("userID") && 
-          <button className='profile-edit' onClick={() => {navigate('/profile/edit')}}>edit profile</button>} 
+          <div>
+            <button className='profile-edit' onClick={() => {navigate('/profile/edit')}}>edit profile</button>
+            <button className='toggle-requests' onClick={toggleRecieved}>recieved requests</button>
+            <button className='toggle-requests' onClick={toggleSent}>sent requests</button>
+          </div>} 
         {currentUserID !== sessionStorage.getItem("userID") && 
-          <button onClick={() => {navigate('/request/submit', {state: {requestee: currentUserID, requesteeUsername: username}})}}>submit request</button>}
+          <button className='submit-request-button' 
+          onClick={() => {navigate('/request/submit', {state: {requestee: currentUserID, requesteeUsername: username}})}}>submit request</button>}
       </div>
     </section>
     <section className='requests-side'>
-      {currentUserID === sessionStorage.getItem("userID") && 
+      {currentUserID === sessionStorage.getItem("userID") && sent &&
       <div>
-        <h1>sent requests</h1>
-        <DisplayRequests userID={sessionStorage.getItem("userID")} status={null}></DisplayRequests>        
+        <h1 className='request-headers'>sent requests</h1>
+        <DisplayRequests className='sent-requests' userID={sessionStorage.getItem("userID")} status={null}></DisplayRequests>        
       </div>}
-      <h1>received requests</h1>
-      <DisplayRequests userID={currentUserID} status={"Requested"}></DisplayRequests>
+        {
+          recieved && 
+          <div>
+            <h1 className='request-headers'>received requests</h1>
+            <div className='request-cols'>
+              <DisplayRequests id='col1' userID={currentUserID} status={"Requested"}></DisplayRequests>
+              <DisplayRequests id='col2' userID={currentUserID} status={"Accepted"}></DisplayRequests>
+              <DisplayRequests id='col3' userID={currentUserID} status={"Started"}></DisplayRequests>
+              <DisplayRequests id='col4' userID={currentUserID} status={"Completed"}></DisplayRequests>                
+            </div>
+          </div>          
+        }
     </section>   
     </div>
   )

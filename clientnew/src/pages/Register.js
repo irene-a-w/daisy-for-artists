@@ -29,8 +29,9 @@ export const Register = () => {
         sessionStorage.setItem("userID", userResponse.data.id);
         sessionStorage.setItem("username", userResponse.data.username);
         sessionStorage.setItem("token", userResponse.data.token);
+        console.log('register', userResponse.data.id);
         if (userResponse.status === 200) {
-          navigate('/profile', {state: {currentUserID: userResponse.data.id}});
+          navigate('/profile', {state: {currentUserID: sessionStorage.setItem("userID", userResponse.data.id)}});
         }
       } catch (error) {
         console.log(error)

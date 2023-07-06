@@ -13,7 +13,7 @@ const profileSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
-        default: 'test'
+        default: ''
     }
 
 });

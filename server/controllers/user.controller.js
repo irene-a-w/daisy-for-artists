@@ -40,6 +40,7 @@ const createUser = asyncHandler(async (req, res) => {
         });        
         await userProfile.save();
         res.status(200).json({
+            id: newUser._id,
             username: newUsername,
             email: newEmail,
             password: newPassword,
