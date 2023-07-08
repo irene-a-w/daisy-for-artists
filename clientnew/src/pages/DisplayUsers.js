@@ -3,7 +3,6 @@ import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 
-// TODO replace headers with link to respective users profile
 const DisplayUsers = () => {
     console.log("in display users");
     const { state } = useLocation();

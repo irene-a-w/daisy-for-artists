@@ -33,11 +33,24 @@ const SubmitRequest = () => {
         }
     }
 
+    const createNotification = async () => {
+      const url = "http://localhost:8080/api/notifications/create"     
+      const headers = {
+        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+        }
+        const notifInfo = {userID: requestee, message: sessionStorage.getItem("username") + ' has sent a new request.'} 
+        await axios.post(url, notifInfo, {headers: headers});
+    }
+
+    const submitRequestEvent = async () => {
+      sendRequest();
+      createNotification();
+    }
+
     useEffect(() => {
       setErrorMsg('');
     }, [requestTitle, requestDescription])
 
-    // on click create a form
   return (
     <div>
       <Navigation />
@@ -57,7 +70,7 @@ const SubmitRequest = () => {
             onChange={(event) => {setRequestDescription(event.target.value)}}>
             </textarea>     
         </div>
-        <button onClick={sendRequest}>submit</button>  
+        <button onClick={submitRequestEvent}>submit</button>  
         <p className='submit-request-error'>{ errorMsg }</p>
       </div>
       <button className='submit-request-return' onClick={()=> {navigate('/profile', {state: {currentUserID: requestee}})}}>return to profile</button>

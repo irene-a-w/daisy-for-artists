@@ -70,3 +70,55 @@ body {
 .nav-link:hover{
     color: #ffe5d9; 
 }
+
+.notification-count{
+    background-color: #ffcad4;
+    color:#9d8189;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0.25rem;
+    margin-right: 0.5rem;
+    padding: 0.25rem;
+    border-radius: 50%;
+    font-size: small;
+}
+
+.bell-icon:hover{
+    cursor: pointer;
+    color:#ffcad4;
+}
+
+.display-notifs{
+    position: absolute;
+    border-radius: 10px;
+    background-color: #ffe5d9;
+    outline-style: solid;
+    outline-color: #9d8189;
+    right: 1rem;
+    width: 20%;
+    height: 20%;
+}
+
+.one-notif{
+    background-color: #ffcad4;
+    margin: 1rem;
+    border-radius: 10px;
+    padding-bottom: 1px;
+}
+
+.one-notif p{
+    margin-left: 95%;
+    margin-bottom: 0;
+    font-size: small;
+}
+
+.one-notif p:hover{
+    cursor: pointer;
+}
+
+.one-notif h3{
+    color:#9d8189;
+    font-size: medium;
+    text-align: center;
+    margin-top: 0;
+}

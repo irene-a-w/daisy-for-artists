@@ -1,7 +1,7 @@
 import './css/Register.css';
 
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import React from 'react';
 import axios from "axios";
@@ -19,19 +19,23 @@ export const Register = () => {
         setErrorMsg('');
     }, [username, password])
 
-    const url = "http://localhost:8080/api/users/"
-    const createUser = { email: email, username: username.toLowerCase(), password: password};
+
     const handleSubmit = async (e) => { 
       e.preventDefault();
+      const specialChar =/[`!@#$%^&*()\+=\[\]{};':"\\|,<>\/?~ ]/;      
+      if (username === '' || specialChar.test(username)) {
+        setErrorMsg('please enter a valid username.')
+      } else {
+        const url = "http://localhost:8080/api/users/"
+        const createUser = { email: email, username: username.toLowerCase(), password: password};   
       try {
         const userResponse = await axios.post(url, createUser);
-        console.log(userResponse);
         sessionStorage.setItem("userID", userResponse.data.id);
         sessionStorage.setItem("username", userResponse.data.username);
         sessionStorage.setItem("token", userResponse.data.token);
         console.log('register', userResponse.data.id);
         if (userResponse.status === 200) {
-          navigate('/profile', {state: {currentUserID: sessionStorage.setItem("userID", userResponse.data.id)}});
+          navigate('/profile', {state: {currentUserID: userResponse.data.id}});
         }
       } catch (error) {
         console.log(error)
@@ -43,7 +47,7 @@ export const Register = () => {
         setErrorMsg('username already in use.');
       } else {
           setErrorMsg('unable to create account.');
-      }}
+      }}}
     }
 
   return (

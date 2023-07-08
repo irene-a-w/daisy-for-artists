@@ -24,7 +24,6 @@
 
 .request-info h1{
     color: #9d8189;
-    padding-top: 0.5rem;
     font-size: xx-large;
 }
 
@@ -35,7 +34,7 @@
     border-radius: 10px;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     width: 6rem;
 }
 
@@ -46,4 +45,13 @@
 .request-description:hover{
     cursor: pointer;
     color: #f4acb7;
+}
+
+.delete-request{
+    margin: 0;
+}
+
+.delete-request:hover{
+    cursor: pointer;
+    color:#f4acb7;
 }

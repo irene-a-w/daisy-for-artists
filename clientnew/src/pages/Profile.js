@@ -9,17 +9,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import DisplayRequests from '../components/DisplayRequests';
 
-// TODO need to implement getting a specific users profile
-
 const Profile = () => {
   const { state } = useLocation();
-  var { currentUserID } = state;
-  if (!currentUserID) {
+  var currentUserID;
+  if (!state) {
      currentUserID = sessionStorage.getItem("userID");
+  } else{
+     currentUserID = state.currentUserID; 
   }
- 
-  console.log("profile ID", currentUserID);
- 
+  
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
   const [sent, setViewSent] = useState(false);
@@ -60,8 +58,6 @@ const Profile = () => {
   useEffect(() => {
     retrieveUserInfo();
   })
-
-  console.log("checking username is set", username, currentUserID, bio)
 
   return (
     <div>

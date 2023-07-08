@@ -1,6 +1,6 @@
 import './css/Login.css';
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import axios from "axios";
 
@@ -26,7 +26,6 @@ const Login = () => {
       console.log("is there a response", userResponse);
 
       if (userResponse.status === 200) {
-        console.log("userResponse")
         sessionStorage.setItem("userID", userResponse.data.id);
         sessionStorage.setItem("username", userResponse.data.username);
         sessionStorage.setItem("token", userResponse.data.token);
@@ -41,23 +40,6 @@ const Login = () => {
         setErrorMsg('login failed.');
     }}
   }
-
-  // const redirectProfile = async () => {
-  //   const token = sessionStorage.getItem("token")
-  //   const headers = {
-  //     'Authorization': 'Bearer ' + token
-  //   }
-  //   const userID = sessionStorage.getItem("userID")
-  //   console.log("userId " + userID)
-  //   const url = "http://localhost:8080/api/users/profile/" + userID;
-  //   console.log("url ", url);
-  //   const userProfile = await axios.get(url, {headers: headers});
-  //   if (userProfile.status === 200) {
-  //     console.log("auth sucess");
-  //     setAuthenticated(true);
-  //   }
-  // }
-
 
   return (
     <div className='login-overall'>
@@ -84,7 +66,6 @@ const Login = () => {
         <p>don't have an account?</p>
         <button onClick={() => navigate('/register')}>register</button>         
       </div>
-      {/* <Link to='/register'>register</Link>       */}
       </div>
 
   )

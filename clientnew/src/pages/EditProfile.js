@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import Navigation from '../components/Navigation';
 
 const EditProfile = () => {
-  // create 3 functions to get patch request
-  // need to use state to keep track
   let navigate = useNavigate(); 
 
   const [newUsername, setUsername] = useState('');
@@ -26,8 +24,6 @@ const EditProfile = () => {
     setErrorMsg('');
   }, [newUsername, newPassword, newBio])
 
-  // send queries function -> display success message
-  // each button will be defined to do a different query
   const handleUsernameChange = async () => { 
     const specialChar =/[`!@#$%^&*()\+=\[\]{};':"\\|,<>\/?~ ]/;
     if (newUsername === '' || specialChar.test(newUsername)) {
@@ -75,11 +71,7 @@ const EditProfile = () => {
   const handleBioChange = async () => { 
     const userID = sessionStorage.getItem("userID");
     const url = "http://localhost:8080/api/users/profile/edit/bio/" + userID;
-    console.log(url);
-    // changing bio is a little different .. i think should display the old bio values
     const newBioRequest = await axios.patch(url, {bio: newBio}, {headers: headers});
-    // once request is submitted, if successful, then just keep the input box with the bio values
-    console.log(newBioRequest);
   }
 
   return (

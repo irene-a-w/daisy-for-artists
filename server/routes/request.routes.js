@@ -11,6 +11,6 @@ router.route('/create').post(protect, createRequest);
 router.route('/:userid').get(getAllRequests);
 router.route('/status/:userid').get(getAllRequestsByStatus);
 router.route('/updatestatus/:id').patch(updateRequestStatus);
-router.route('/delete/:id').delete(protect, deleteRequest);
+router.route('/delete/:id').delete(deleteRequest);
 
 module.exports = router;
